@@ -1,5 +1,5 @@
-var PetRow = React.createClass({
-    render: function () {
+class PetRow extends React.Component {
+    render() {
         return (
             <tr>
                 <td>{this.props.pet.name}</td>
@@ -7,10 +7,10 @@ var PetRow = React.createClass({
             </tr>
         );
     }
-});
+}
 
-var PetTable = React.createClass({
-    render: function () {
+class PetTable extends React.Component {
+    render() {
         var rows = [];
 
         this.props.pets.forEach(function (pet) {
@@ -32,15 +32,21 @@ var PetTable = React.createClass({
             </table>
         );
     }
-});
+}
 
-var SearchBar = React.createClass({
-    handleChange: function () {
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange() {
         this.props.onUserInput(
             this.refs.filterTextInput.value
         );
-    },
-    render: function () {
+    }
+
+    render() {
         return (
             <form>
                 <input
@@ -53,16 +59,22 @@ var SearchBar = React.createClass({
             </form>
         );
     }
-});
+}
 
-var FilterablePetTable = React.createClass({
-    getInitialState: function () {
-        return {
+class FilterablePetTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleUserInput = this.handleUserInput.bind(this);
+        this.loadPetsFromServer = this.loadPetsFromServer.bind(this)
+        this.loadPetsFromServer();
+        setInterval(this.loadPetsFromServer, this.props.pollInterval);
+        this.state = {
             filterText: '',
             data: []
         };
-    },
-    loadPetsFromServer: function () {
+    }
+
+    loadPetsFromServer() {
         $.ajax({
             url: this.props.url + "findByStatus/available",
             dataType: 'json',
@@ -76,19 +88,15 @@ var FilterablePetTable = React.createClass({
                 console.error(this.props.url, status, err.toString());
             }.bind(this)
         });
-    },
-    componentDidMount: function () {
-        this.loadPetsFromServer();
-        setInterval(this.loadPetsFromServer, this.props.pollInterval);
-    },
+    }
 
-    handleUserInput: function (filterText) {
+    handleUserInput(filterText) {
         this.setState({
-            filterText: filterText,
+            filterText: filterText
         });
-    },
+    }
 
-    render: function () {
+    render() {
         return (
             <div>
                 <SearchBar
@@ -102,7 +110,8 @@ var FilterablePetTable = React.createClass({
             </div>
         );
     }
-});
+}
+
 
 ReactDOM.render(
     <FilterablePetTable url="http://localhost:8080/pet/" pollInterval={2000}/>,
