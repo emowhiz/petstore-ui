@@ -1,0 +1,27 @@
+{
+  "name": "petstore-ui-example",
+  "version": "1.0.0",
+  "description": "Code for pet-store-ui.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "browser-js": "^1.10.1",
+    "express": "^4.4.5",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1",
+    "babel-core" : "^5.6.15"
+  },
+  "devDependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "emowhiz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reactjs/react-tutorial.git"
+  }
+}
